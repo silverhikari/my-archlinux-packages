@@ -1,0 +1,26 @@
+# Maintainer: silverhikari <kerrickethan@gmail.com>
+pkgname=japanese-text-analysis-tool
+_pkgname="JapaneseTextAnalysisTool"
+pkgver=5.4
+pkgrel=1
+epoch=
+pkgdesc=""
+arch=('x86_64')
+url="https://sourceforge.net/projects/japanesetextana"
+license=('GPL3')
+depends=('mono')
+provides=('japanese-text-analysis-tool')
+source=("${url}/files/${_pkgname}_v${pkgver}/${_pkgname}_v${pkgver}_Source_Code.7z")
+sha256sums=('5dad3f59c1f578685e4891cd0820c16286ddabbd38878a1d7b07453aec599411')
+
+build() {
+	cd "${_pkgname}"
+	msbuild JapaneseTextAnalysisTool.sln -p:Configuration=Release -t:build
+}
+
+package() {
+	cd "${_pkgname}"
+	install -Dm755 "${_pkgname}/bin/Release/${_pkgname}.exe" "${pkgdir}/usr/bin/${_pkgname}.exe"
+	echo -e "#! /bin/sh\nmono /usr/bin/${_pkgname}.exe" > "${pkgdir}/usr/bin/${pkgname}"
+	chmod a+x "${pkgdir}/usr/bin/${pkgname}"
+}

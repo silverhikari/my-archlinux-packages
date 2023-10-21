@@ -1,0 +1,37 @@
+# maintainer: silverhikari <kerrickethan@gmail.com>
+pkgname=my-emacs-git
+_pkgname=emacs
+pkgver=emacs.29.1.r167980.f8d82b42818
+pkgrel=1
+pkgdesc="a lisp-based text editor and enviroment"
+arch=('x86_64')
+url="https://savannah.gnu.org/projects/emacs/"
+license=('GPL3')
+depends=('harfbuzz' 'libxpm' 'libpng' 'libjpeg' 'libtiff' 'giflib' 'librsvg' 'libwebp' 'systemd' 'freetype2' 'jansson' 'tree-sitter' 'sqlite')
+makedepends=('git' 'libgccjit')
+provides=("${_pkgname}")
+conflicts=("${_pkgname}")
+source=('git+https://git.savannah.gnu.org/git/emacs.git#branch=master')
+md5sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${_pkgname}"
+	printf "%s" "$(git describe --long | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+}
+
+build() {
+	cd "emacs"
+	./autogen.sh
+	#default toolkit is --with-x-toolkit=gtk3
+	#for pgtk support use --with-pgtk
+	./configure  --libexecdir=/usr/lib --prefix=/usr --with-x-toolkit=gtk3 --with-xwidgets --with-native-compilation=aot --with-tree-sitter --with-sqlite
+	make bootstrap
+}
+
+package() {
+	cd "emacs"
+	make DESTDIR="$pkgdir/" install
+	mv "${pkgdir}"/usr/bin/{ctags,ctags.emacs}
+	mv "${pkgdir}"/usr/share/man/man1/{ctags.1.gz,ctags.emacs.1}
+	find "${pkgdir}"/usr/share/emacs/ -exec chown root:root {} \;
+}

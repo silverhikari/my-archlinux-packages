@@ -1,0 +1,28 @@
+# Maintainer: silverhikari <kerrickethan@gmail.com>
+pkgname=x16-user-guide-git
+pkgver=r139.a76e276
+pkgrel=1
+pkgdesc="Commander X16 User Guide"
+arch=('any')
+url="https://github.com/X16Community/x16-user-guide"
+license=('unknown')
+makedepends=('git' 'texlive-bibtexextra' 'texlive-core' 'biber')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+source=("git+${url}")
+sha256sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${pkgname%-git}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "$srcdir/${pkgname%-git}"
+	make all
+}
+
+package() {
+	cd "$srcdir/${pkgname%-git}"
+	install -Dm755 "x16_manual.pdf" "${pkgdir}/usr/share/doc/x16-user-guide/x16-manual.pdf"
+}

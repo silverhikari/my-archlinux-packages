@@ -1,0 +1,41 @@
+# Maintainer: silverhikari <kerrickethan@gmail.com>
+pkgname=my-emacs
+_pkgname=emacs
+pkgver=29.1
+pkgrel=2
+epoch=
+pkgdesc="a lisp-based text editor and enviroment"
+arch=('x86_64')
+url="https://github.com/emacs-mirror/emacs"
+license=('GPL3')
+groups=()
+depends=('harfbuzz' 'libxpm' 'libpng' 'libjpeg' 'libtiff' 'giflib' 'librsvg' 'libwebp' 'systemd' 'freetype2' 'jansson' 'tree-sitter' 'sqlite')
+makedepends=('libgccjit')
+provides=('emacs')
+conflicts=('emacs')
+options=()
+source=("${url}/archive/refs/tags/${_pkgname}-${pkgver//_/-}.tar.gz")
+noextract=()
+sha256sums=('77acbd95a036b1946aff2dda2288def0fc9180d378adcbe3d5aa3f8b954fd48d')
+
+build() {
+	cd "emacs-${_pkgname}-${pkgver//_/-}"
+	./autogen.sh
+	#default toolkit is --with-x-toolkit=gtk3
+	#for pgtk support use --with-pgtk
+	./configure  --libexecdir=/usr/lib --prefix=/usr --with-x-toolkit=gtk3 --with-xwidgets --with-native-compilation=aot --with-tree-sitter --with-sqlite
+	make bootstrap
+}
+
+check() {
+cd "emacs-${_pkgname}-${pkgver//_/-}"
+#make check
+}
+
+package() {
+	cd "emacs-${_pkgname}-${pkgver//_/-}"
+	make DESTDIR="$pkgdir/" install
+	mv "${pkgdir}"/usr/bin/{ctags,ctags.emacs}
+	mv "${pkgdir}"/usr/share/man/man1/{ctags.1.gz,ctags.emacs.1}
+	find "${pkgdir}"/usr/share/emacs/${pkgver%_rc1} -exec chown root:root {} \;
+}

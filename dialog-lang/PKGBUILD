@@ -1,0 +1,31 @@
+# Maintainer: Your Name <youremail@domain.com>
+pkgname=dialog-lang
+pkgver=0m03_0_46
+pkgrel=1
+epoch=
+pkgdesc="a compiler for the dialog interactive fiction language"
+arch=('x86_64' 'i386')
+url="https://www.linusakesson.net/dialog/"
+license=('custom:Linus akesson license')
+depends=()
+makedepends=()
+optdepends=()
+provides=('dialogc')
+source=("https://hd0.linusakesson.net/files/dialog-$pkgver.zip")
+sha256sums=('fd0781553e25f6372a45fad81967fc1f30f8215b7cc79bc25434bb8192697e2f')
+
+build() {
+	cd "dialog-$pkgver/src"
+	make
+}
+
+package() {
+	cd "dialog-$pkgver/src"
+	install -Dm755 "dialogc" "$pkgdir/usr/bin/dialogc"
+	install -Dm755 "dgdebug" "$pkgdir/usr/bin/dgdebug"
+	install -Dm755 "../license.txt" "$pkgdir/usr/share/licenses/dialogc/LICENSE"
+	install -d "$pkgdir/usr/share/doc/"
+	cd "$srcdir/dialog-$pkgver"
+	cp -r "docs" "dialogc"
+	cp -r  "dialogc" "$pkgdir/usr/share/doc/"
+}
