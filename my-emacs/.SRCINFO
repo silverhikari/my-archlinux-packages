@@ -1,0 +1,27 @@
+pkgbase = my-emacs
+	pkgdesc = a lisp-based text editor and enviroment
+	pkgver = 29.1
+	pkgrel = 2
+	url = https://github.com/emacs-mirror/emacs
+	arch = x86_64
+	license = GPL3
+	makedepends = libgccjit
+	depends = harfbuzz
+	depends = libxpm
+	depends = libpng
+	depends = libjpeg
+	depends = libtiff
+	depends = giflib
+	depends = librsvg
+	depends = libwebp
+	depends = systemd
+	depends = freetype2
+	depends = jansson
+	depends = tree-sitter
+	depends = sqlite
+	provides = emacs
+	conflicts = emacs
+	source = https://github.com/emacs-mirror/emacs/archive/refs/tags/emacs-29.1.tar.gz
+	sha256sums = 77acbd95a036b1946aff2dda2288def0fc9180d378adcbe3d5aa3f8b954fd48d
+
+pkgname = my-emacs

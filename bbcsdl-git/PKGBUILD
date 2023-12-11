@@ -1,0 +1,57 @@
+# Maintainer: silverhikari <kerrickethan@gmail.com>
+pkgname=bbcsdl-git
+_pkgname=BBCSDL
+pkgver=r99.b501c78
+pkgrel=1
+pkgdesc="cross-platform implementation of BBC BASIC in sdl2"
+arch=('any')
+url="https://www.bbcbasic.co.uk/bbcsdl/"
+license=('custom: zlib')
+depends=()
+makedepends=('git' 'gendesk')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+replaces=()
+backup=()
+options=()
+install=
+source=('git+https://github.com/rtrussell/BBCSDL')
+md5sums=('SKIP')
+
+pkgver() {
+	cd "$srcdir/${_pkgname}"
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+prepare() {
+cd "$srcdir/${_pkgname}"
+gendesk -f --pkgname "$pkgname" --pkgdesc "$pkgdesc" --exec "/usr/bin/bbcsdl" --path "/usr/share/bbcsdl"
+}
+
+build() {
+	cd "$srcdir/${_pkgname}/bin/linux"
+	make
+	cd "$srcdir/${_pkgname}/console/linux"
+	make
+}
+
+package() {
+	cd "$srcdir/${_pkgname}"
+	#install of GUI
+	install -Dm755 "bbcsdl" "${pkgdir}/usr/share/bbcsdl/bbcsdl"
+	install -Dm755 "bbcsdl.bbc" "${pkgdir}/usr/share/bbcsdl/bbcsdl.bbc"
+	install -Dm755 "libstb.so" "${pkgdir}/usr/share/bbcsdl/libstb.so"
+	#install commandline
+	install -Dm755 "bbcbasic" "${pkgdir}/usr/share/bbcsdl/bbcbasic"
+	# link binaries
+	install -d "${pkgdir}/usr/bin/"
+	ln -s "/usr/share/bbcsdl/bbcsdl" "${pkgdir}/usr/bin/bbcsdl"
+	ln -s "/usr/share/bbcsdl/bbcbasic" "${pkgdir}/usr/bin/bbcbasic"
+	#install of examples and tests
+	cp -rf "./examples" "${pkgdir}/usr/share/bbcsdl/"
+	cp -rf "./tests" "${pkgdir}/usr/share/bbcsdl/"
+	#install license
+	install -Dm755 "licence.txt" "${pkgdir}/usr/share/licenses/bbcsdl/LICENSE"
+	#install desktop icon
+	install -Dm644 "${pkgname%-git}.desktop" "$pkgdir/usr/share/applications/$pkgname.desktop"
+}

@@ -1,0 +1,12 @@
+pkgbase = japanese-text-analysis-tool
+	pkgver = 5.4
+	pkgrel = 1
+	url = https://sourceforge.net/projects/japanesetextana
+	arch = x86_64
+	license = GPL3
+	depends = mono
+	provides = japanese-text-analysis-tool
+	source = https://sourceforge.net/projects/japanesetextana/files/JapaneseTextAnalysisTool_v5.4/JapaneseTextAnalysisTool_v5.4_Source_Code.7z
+	sha256sums = 5dad3f59c1f578685e4891cd0820c16286ddabbd38878a1d7b07453aec599411
+
+pkgname = japanese-text-analysis-tool

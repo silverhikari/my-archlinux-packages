@@ -1,0 +1,15 @@
+pkgbase = bbcsdl-git
+	pkgdesc = cross-platform implementation of BBC BASIC in sdl2
+	pkgver = r99.b501c78
+	pkgrel = 1
+	url = https://www.bbcbasic.co.uk/bbcsdl/
+	arch = any
+	license = custom: zlib
+	makedepends = git
+	makedepends = gendesk
+	provides = bbcsdl
+	conflicts = bbcsdl
+	source = git+https://github.com/rtrussell/BBCSDL
+	md5sums = SKIP
+
+pkgname = bbcsdl-git

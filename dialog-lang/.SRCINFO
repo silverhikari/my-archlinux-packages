@@ -1,0 +1,13 @@
+pkgbase = dialog-lang
+	pkgdesc = a compiler for the dialog interactive fiction language
+	pkgver = 0m03_0_46
+	pkgrel = 1
+	url = https://www.linusakesson.net/dialog/
+	arch = x86_64
+	arch = i386
+	license = custom:Linus akesson license
+	provides = dialogc
+	source = https://hd0.linusakesson.net/files/dialog-0m03_0_46.zip
+	sha256sums = fd0781553e25f6372a45fad81967fc1f30f8215b7cc79bc25434bb8192697e2f
+
+pkgname = dialog-lang

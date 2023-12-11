@@ -1,0 +1,28 @@
+pkgbase = my-emacs-git
+	pkgdesc = a lisp-based text editor and enviroment
+	pkgver = emacs.29.1.r167980.f8d82b42818
+	pkgrel = 1
+	url = https://savannah.gnu.org/projects/emacs/
+	arch = x86_64
+	license = GPL3
+	makedepends = git
+	makedepends = libgccjit
+	depends = harfbuzz
+	depends = libxpm
+	depends = libpng
+	depends = libjpeg
+	depends = libtiff
+	depends = giflib
+	depends = librsvg
+	depends = libwebp
+	depends = systemd
+	depends = freetype2
+	depends = jansson
+	depends = tree-sitter
+	depends = sqlite
+	provides = emacs
+	conflicts = emacs
+	source = git+https://git.savannah.gnu.org/git/emacs.git#branch=master
+	md5sums = SKIP
+
+pkgname = my-emacs-git

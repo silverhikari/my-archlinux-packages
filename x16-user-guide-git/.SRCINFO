@@ -1,0 +1,17 @@
+pkgbase = x16-user-guide-git
+	pkgdesc = Commander X16 User Guide
+	pkgver = r172.7170037
+	pkgrel = 1
+	url = https://github.com/X16Community/x16-user-guide
+	arch = any
+	license = unknown
+	makedepends = git
+	makedepends = texlive-bibtexextra
+	makedepends = texlive-core
+	makedepends = biber
+	provides = x16-user-guide
+	conflicts = x16-user-guide
+	source = git+https://github.com/X16Community/x16-user-guide
+	sha256sums = SKIP
+
+pkgname = x16-user-guide-git
